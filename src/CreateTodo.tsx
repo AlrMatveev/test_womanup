@@ -5,6 +5,7 @@ import db from "./firebase";
 const CreateTodo: FC = () => {
   const handleCreatet = (event: any) => {
     event.preventDefault();
+    /* tslint:disable */
     const { title, description } = event.target;
     push(ref(db, "todos/"), {
       title: title.value,

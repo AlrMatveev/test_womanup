@@ -3,14 +3,20 @@ import { ref, update } from "firebase/database";
 import db from "./firebase";
 import RemoveTodo from "./RemoveTodo";
 import CompleteTodo from "./ComleteTodo";
+import { ITodo } from "./types";
 
 interface ITodoProps {
   id: string;
-  todo: any;
+  todo: ITodo;
+}
+interface IFixTodo {
+  title: string | null;
+  description: string | null;
+  on: boolean;
 }
 
 const Todo: FC<ITodoProps> = ({ id, todo }) => {
-  const [fixTodo, setFixTodo] = useState({
+  const [fixTodo, setFixTodo] = useState<IFixTodo>({
     title: null,
     description: null,
     on: false,
@@ -31,6 +37,7 @@ const Todo: FC<ITodoProps> = ({ id, todo }) => {
           ? fixTodo.description
           : todo.description,
       };
+
       update(ref(db), {
         ["/todos/" + id]: updateTodo,
       });
@@ -40,7 +47,9 @@ const Todo: FC<ITodoProps> = ({ id, todo }) => {
     }
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = event.target;
     setFixTodo({
       ...fixTodo,
@@ -71,7 +80,7 @@ const Todo: FC<ITodoProps> = ({ id, todo }) => {
       <div>{todo.complete ? "Complete: " + todo.complete : "not done"}</div>
       <div>
         <button onClick={handleFix}>Fix</button>
-        <CompleteTodo id={id} />
+        {!todo.complete && <CompleteTodo id={id} />}
         <RemoveTodo id={id} />
       </div>
     </div>
