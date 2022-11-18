@@ -36,6 +36,7 @@ const Todo: FC<ITodoProps> = ({ id, todo }) => {
         description: fixTodo.description
           ? fixTodo.description
           : todo.description,
+        complete: todo.complete,
       };
 
       update(ref(db), {
