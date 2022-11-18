@@ -4,6 +4,7 @@ import db from "./firebase";
 import RemoveTodo from "./RemoveTodo";
 import CompleteTodo from "./ComleteTodo";
 import { ITodo } from "./types";
+import AttachFile from "./AttachFile";
 
 interface ITodoProps {
   id: string;
@@ -83,6 +84,7 @@ const Todo: FC<ITodoProps> = ({ id, todo }) => {
         <button onClick={handleFix}>Fix</button>
         {!todo.complete && <CompleteTodo id={id} />}
         <RemoveTodo id={id} />
+        <AttachFile />
       </div>
     </div>
   );
